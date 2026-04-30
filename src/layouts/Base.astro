@@ -189,12 +189,19 @@ const jsonLd = {
     </script>
 
     <div class="splash" aria-hidden="true">
-      <span class="splash__mark">
-        <svg viewBox="0 0 40 40" fill="none">
-          <path d="M20 2.5 L34.5 8.4 V20.4 C34.5 28.6 28.4 35.4 20 37.5 C11.6 35.4 5.5 28.6 5.5 20.4 V8.4 L20 2.5 Z" stroke="var(--gold-500)" stroke-width="1.4" fill="none"/>
-          <path d="M11 16 L15.5 25 L20 19 L24.5 25 L29 16" stroke="var(--gold-400)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" class="splash__check"/>
-        </svg>
-      </span>
+      <div class="splash__inner">
+        <span class="splash__mark">
+          <svg viewBox="0 0 97.39 111.72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="splash__poly splash__poly--1" points="30.75 101.58 48.7 111.72 97.39 84.24 97.39 63.14 30.75 101.58" fill="var(--cream-50)"/>
+            <polygon class="splash__poly splash__poly--2" points="48.7 0 0 27.49 0 84.24 9 89.3 97.39 38.02 97.39 27.49 89.05 22.78 18.81 63.53 18.81 37.71 66.49 10.04 48.7 0" fill="var(--cream-50)"/>
+            <circle class="splash__dot" cx="92" cy="100" r="4" fill="var(--gold-500)"/>
+          </svg>
+        </span>
+        <span class="splash__text">
+          <span class="splash__brand">WES</span>
+          <span class="splash__tag">Agencia de Seguros</span>
+        </span>
+      </div>
     </div>
 
     <style is:global>
@@ -216,30 +223,96 @@ const jsonLd = {
         position: fixed;
         inset: 0;
         z-index: 200;
-        background: var(--ink-900);
+        background: linear-gradient(165deg, var(--ink-900) 0%, var(--ink-800) 70%, var(--ink-700) 100%);
         display: grid;
         place-items: center;
         transition: opacity 0.6s var(--ease-out-expo) 0.2s, visibility 0s linear 0.8s;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .splash::before {
+        content: "";
+        position: absolute;
+        width: 600px; height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(216,181,102,0.2), transparent 60%);
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        filter: blur(80px);
         pointer-events: none;
       }
       body.is-loaded .splash {
         opacity: 0;
         visibility: hidden;
       }
+      .splash__inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+      }
       .splash__mark {
         width: 64px;
-        height: 64px;
+        height: 72px;
         display: inline-grid;
         place-items: center;
+        animation: splashFloat 2.4s var(--ease-out-expo) infinite alternate;
       }
-      .splash__mark svg { width: 100%; height: 100%; }
-      .splash__check {
-        stroke-dasharray: 60;
-        stroke-dashoffset: 60;
-        animation: splashDraw 1s var(--ease-out-expo) forwards;
+      .splash__mark svg { width: 100%; height: 100%; overflow: visible; }
+      .splash__poly {
+        opacity: 0;
+        transform-origin: center;
+        animation: splashPolyIn 0.7s var(--ease-out-expo) forwards;
       }
-      @keyframes splashDraw {
-        to { stroke-dashoffset: 0; }
+      .splash__poly--1 {
+        animation-delay: 0.05s;
+        transform: translateY(-12px);
+      }
+      .splash__poly--2 {
+        animation-delay: 0.18s;
+        transform: translateY(12px);
+      }
+      .splash__dot {
+        opacity: 0;
+        animation: splashFade 0.5s var(--ease-out-expo) 0.6s forwards;
+      }
+      .splash__text {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        opacity: 0;
+        transform: translateY(8px);
+        animation: splashFadeUp 0.6s var(--ease-out-expo) 0.4s forwards;
+      }
+      .splash__brand {
+        font-family: var(--font-serif);
+        font-size: 1.6rem;
+        font-weight: 500;
+        letter-spacing: 0.32em;
+        color: var(--cream-50);
+      }
+      .splash__tag {
+        font-family: var(--font-sans);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold-400);
+      }
+      @keyframes splashPolyIn {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes splashFade {
+        to { opacity: 1; }
+      }
+      @keyframes splashFadeUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes splashFloat {
+        from { transform: translateY(0); }
+        to { transform: translateY(-4px); }
       }
     </style>
   </body>
