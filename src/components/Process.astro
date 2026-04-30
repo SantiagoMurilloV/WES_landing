@@ -1,0 +1,110 @@
+---
+import { process, site } from "../data/site";
+---
+
+<section class="process section" id="proceso">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2>
+        Tres pasos. Cero <span class="accent">letra pequeña.</span>
+      </h2>
+      <p>
+        Nuestra metodología es simple, transparente y centrada en ti. Sin presiones, sin venta dura,
+        sin sorpresas. Solo asesoría profesional con cariño de familia.
+      </p>
+    </header>
+
+    <ol class="process__list">
+      {process.map((p, i) => (
+        <li class="process__item" data-reveal data-reveal-delay={i + 1}>
+          <div class="process__num">{p.n}</div>
+          <div class="process__body">
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </div>
+          <div class="process__line" aria-hidden="true"></div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="process__cta" data-reveal data-reveal-delay="4">
+      <p>¿Listo para empezar? Tu primera asesoría es gratuita y sin compromiso.</p>
+      <a class="btn btn-primary" href={site.whatsapp} target="_blank" rel="noopener">
+        Agendar mi asesoría
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    background: var(--cream-50);
+  }
+  .process__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    counter-reset: step;
+    margin-bottom: 4rem;
+  }
+  .process__item {
+    position: relative;
+    padding: 2rem 1.5rem 2.4rem;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(6,18,31,0.06);
+    box-shadow: var(--shadow-soft);
+  }
+  .process__num {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    line-height: 1;
+    background: linear-gradient(180deg, var(--gold-500), var(--gold-600));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+  .process__body h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.6rem;
+  }
+  .process__body p {
+    font-size: 0.95rem;
+    color: var(--muted-700);
+  }
+  .process__line {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-500), transparent);
+    z-index: 1;
+  }
+  .process__item:last-child .process__line { display: none; }
+
+  .process__cta {
+    text-align: center;
+    padding: 3rem;
+    border: 1px dashed rgba(6,18,31,0.18);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, rgba(216,181,102,0.06), rgba(255,255,255,0.6));
+  }
+  .process__cta p {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    color: var(--ink-800);
+    margin-bottom: 1.4rem;
+  }
+
+  @media (max-width: 880px) {
+    .process__list { grid-template-columns: 1fr; }
+    .process__line { display: none; }
+  }
+</style>

@@ -1,0 +1,246 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import ScrollProgress from "../components/ScrollProgress.astro";
+import { site, services } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ?? `${site.name} — ${site.tagline}`;
+const pageDesc = description ?? site.description;
+const canonical = "https://wesagenciadeseguros.com/";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "InsuranceAgency",
+  name: site.name,
+  url: canonical,
+  logo: canonical + "favicon.svg",
+  description: site.description,
+  slogan: site.tagline,
+  foundingDate: "1975",
+  telephone: site.phone,
+  email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address,
+    addressLocality: "Armenia",
+    addressRegion: "Quindío",
+    addressCountry: "CO",
+  },
+  areaServed: { "@type": "Country", name: "Colombia" },
+  sameAs: [site.social.instagram, site.social.facebook],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "612",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Coberturas",
+    itemListElement: services.map((s) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: s.title, description: s.summary },
+    })),
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="keywords" content="seguros Colombia, seguros Armenia, seguros familiares, seguro auto Colombia, seguro vida, seguro hogar, agencia de seguros Quindío, WES seguros, asesores de seguros, Allianz, Sura, Bolívar" />
+    <meta name="author" content={site.name} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="es_CO" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+
+    <meta name="theme-color" content="#0A1A2F" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+    <ScrollProgress />
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      // Scroll reveal
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+
+      // Counters
+      const counterIO = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target;
+            const target = +el.dataset.count;
+            const duration = 1600;
+            const start = performance.now();
+            const step = (now) => {
+              const p = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - p, 3);
+              el.textContent = Math.floor(eased * target).toLocaleString("es-CO");
+              if (p < 1) requestAnimationFrame(step);
+              else el.textContent = target.toLocaleString("es-CO");
+            };
+            requestAnimationFrame(step);
+            counterIO.unobserve(el);
+          });
+        },
+        { threshold: 0.6 }
+      );
+      document.querySelectorAll("[data-count]").forEach((el) => counterIO.observe(el));
+
+      // Sticky nav state
+      const nav = document.querySelector("[data-nav]");
+      if (nav) {
+        const onScroll = () => {
+          if (window.scrollY > 24) nav.classList.add("is-scrolled");
+          else nav.classList.remove("is-scrolled");
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
+
+      // Mobile nav toggle (any [data-nav-toggle] toggles the menu)
+      const navToggles = document.querySelectorAll("[data-nav-toggle]");
+      const navMenu = document.querySelector("[data-nav-menu]");
+      const setMenu = (open) => {
+        if (!navMenu) return;
+        navMenu.classList.toggle("is-open", open);
+        navToggles.forEach((t) => t.setAttribute("aria-expanded", open ? "true" : "false"));
+        document.body.classList.toggle("nav-open", open);
+      };
+      if (navMenu && navToggles.length) {
+        navToggles.forEach((t) =>
+          t.addEventListener("click", () => setMenu(!navMenu.classList.contains("is-open")))
+        );
+        navMenu.querySelectorAll("a").forEach((a) =>
+          a.addEventListener("click", () => setMenu(false))
+        );
+        // Cerrar con Escape
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && navMenu.classList.contains("is-open")) setMenu(false);
+        });
+      }
+
+      // FAQ accordion
+      document.querySelectorAll("[data-faq] details").forEach((d) => {
+        d.addEventListener("toggle", () => {
+          if (d.open) {
+            d.parentElement
+              ?.querySelectorAll("details")
+              .forEach((other) => {
+                if (other !== d) other.removeAttribute("open");
+              });
+          }
+        });
+      });
+
+      // Splash fade
+      window.addEventListener("load", () => {
+        document.body.classList.add("is-loaded");
+      });
+    </script>
+
+    <div class="splash" aria-hidden="true">
+      <span class="splash__mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M20 2.5 L34.5 8.4 V20.4 C34.5 28.6 28.4 35.4 20 37.5 C11.6 35.4 5.5 28.6 5.5 20.4 V8.4 L20 2.5 Z" stroke="var(--gold-500)" stroke-width="1.4" fill="none"/>
+          <path d="M11 16 L15.5 25 L20 19 L24.5 25 L29 16" stroke="var(--gold-400)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" class="splash__check"/>
+        </svg>
+      </span>
+    </div>
+
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        top: -100px;
+        left: 1rem;
+        background: var(--ink-900);
+        color: var(--cream-50);
+        padding: 0.6rem 1rem;
+        border-radius: var(--radius-sm);
+        z-index: 999;
+        transition: top 0.2s;
+      }
+      .skip-link:focus { top: 1rem; }
+      body.nav-open { overflow: hidden; }
+
+      .splash {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: var(--ink-900);
+        display: grid;
+        place-items: center;
+        transition: opacity 0.6s var(--ease-out-expo) 0.2s, visibility 0s linear 0.8s;
+        pointer-events: none;
+      }
+      body.is-loaded .splash {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .splash__mark {
+        width: 64px;
+        height: 64px;
+        display: inline-grid;
+        place-items: center;
+      }
+      .splash__mark svg { width: 100%; height: 100%; }
+      .splash__check {
+        stroke-dasharray: 60;
+        stroke-dashoffset: 60;
+        animation: splashDraw 1s var(--ease-out-expo) forwards;
+      }
+      @keyframes splashDraw {
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
+  </body>
+</html>

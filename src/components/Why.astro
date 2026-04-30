@@ -1,0 +1,259 @@
+---
+import { values, site } from "../data/site";
+---
+
+<section class="why section" id="por-que">
+  <div class="why__bg" aria-hidden="true">
+    <div class="why__glow"></div>
+    <div class="why__grid"></div>
+  </div>
+
+  <div class="container why__inner">
+    <div class="why__head" data-reveal>
+      <span class="eyebrow">Por qué WES</span>
+      <h2>
+        Más de medio siglo<br/>
+        siendo el <span class="accent">asesor de confianza</span><br/>
+        de miles de familias.
+      </h2>
+    </div>
+
+    <div class="why__founder" data-reveal data-reveal-delay="2">
+      <div class="why__photo">
+        <img
+          src="/media/WES-Agencia-de-Seguros-William-Echeverry-1.webp"
+          alt="William Echeverry — Fundador de WES Agencia de Seguros"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="why__photo-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Fundador
+        </span>
+        <div class="why__photo-meta">
+          <span>William Echeverry</span>
+          <small>Fundador & CEO · 50+ años en el sector</small>
+        </div>
+      </div>
+
+      <div class="why__quote">
+        <svg viewBox="0 0 60 50" aria-hidden="true">
+          <path d="M0 30c0-12 7-22 18-26v8c-6 4-9 9-9 14h9v18H0V30Zm33 0c0-12 7-22 18-26v8c-6 4-9 9-9 14h9v18H33V30Z" fill="currentColor"/>
+        </svg>
+        <p>
+          Empecé esta agencia con una sola idea: que cada cliente fuera tratado como
+          parte de mi propia familia. Cinco décadas después, esa idea sigue siendo
+          nuestro ADN. Por eso, <em>generaciones enteras</em> nos confían
+          la protección de su patrimonio.
+        </p>
+        <footer class="why__quote-foot">
+          <span class="why__quote-name">William Echeverry</span>
+          <span class="why__quote-role">Fundador · WES Agencia de Seguros</span>
+        </footer>
+      </div>
+    </div>
+
+    <ul class="why__values">
+      {values.map((v, i) => (
+        <li class="value" data-reveal data-reveal-delay={(i % 3) + 1}>
+          <span class="value__num">·{String(i + 1).padStart(2, "0")}</span>
+          <h4>{v.title}</h4>
+          <p>{v.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .why {
+    background: var(--ink-800);
+    color: var(--cream-50);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .why__bg { position: absolute; inset: 0; z-index: -1; }
+  .why__grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 70% at 30% 30%, #000 30%, transparent 100%);
+  }
+  .why__glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(216,181,102,0.18), transparent 60%);
+    top: -30%;
+    right: -10%;
+    filter: blur(80px);
+  }
+
+  .why__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  .why__head h2 {
+    color: var(--cream-50);
+    line-height: 1.05;
+  }
+  .why__head .accent {
+    background: linear-gradient(110deg, var(--gold-400), var(--gold-300));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .why__head .eyebrow { color: var(--gold-400); }
+  .why__head .eyebrow::before { background: var(--gold-400); }
+
+  .why__founder {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .why__photo {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--ink-900);
+  }
+  .why__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transition: transform 0.8s var(--ease-out-expo);
+  }
+  .why__photo:hover img { transform: scale(1.04); }
+  .why__photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(20,23,46,0.85));
+    pointer-events: none;
+  }
+  .why__photo-tag {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-pill);
+    background: var(--gold-500);
+    color: var(--ink-900);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .why__photo-meta {
+    position: absolute;
+    bottom: 1.6rem;
+    left: 1.6rem;
+    right: 1.6rem;
+    z-index: 2;
+    display: grid;
+    gap: 0.2rem;
+  }
+  .why__photo-meta span {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--cream-50);
+    letter-spacing: -0.01em;
+  }
+  .why__photo-meta small {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.02em;
+  }
+
+  .why__quote {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg);
+    padding: 2.4rem 2rem 2rem;
+    position: relative;
+    backdrop-filter: blur(8px);
+  }
+  .why__quote svg {
+    width: 38px;
+    color: var(--gold-500);
+    position: absolute;
+    top: -18px;
+    left: 1.6rem;
+    background: var(--ink-800);
+    padding: 0 0.4rem;
+  }
+  .why__quote p {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    line-height: 1.4;
+    color: var(--cream-50);
+    margin-bottom: 1.5rem;
+  }
+  .why__quote em { color: var(--gold-300); font-style: italic; }
+  .why__quote-foot {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .why__quote-name {
+    font-weight: 500;
+    color: var(--cream-50);
+  }
+  .why__quote-role {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    margin-top: 0.2rem;
+  }
+
+  .why__values {
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .value {
+    display: grid;
+    gap: 0.8rem;
+    padding-right: 1rem;
+  }
+  .value__num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--gold-400);
+    letter-spacing: 0.1em;
+  }
+  .value h4 {
+    font-size: 1.25rem;
+    color: var(--cream-50);
+    line-height: 1.2;
+  }
+  .value p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 920px) {
+    .why__founder { grid-template-columns: 1fr; }
+    .why__values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .why__values { grid-template-columns: 1fr; }
+  }
+</style>

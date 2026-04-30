@@ -1,0 +1,247 @@
+---
+const stories = [
+  {
+    name: "Familia Restrepo",
+    yearsWithUs: 12,
+    coverage: "Auto · Vida · Hogar",
+    quote: "Tres generaciones aseguradas con ellos. Es la única agencia que conocemos.",
+    palette: "navy",
+    image: "/media/familia-scaled.jpg",
+  },
+  {
+    name: "Comercial Andina",
+    yearsWithUs: 8,
+    coverage: "Empresarial · Flota · RC",
+    quote: "Renovamos cada año porque el servicio es excepcional. Ahorran tiempo y dinero.",
+    palette: "gold",
+    image: null,
+  },
+  {
+    name: "Familia Marín",
+    yearsWithUs: 6,
+    coverage: "Salud · Vida",
+    quote: "Cuando más lo necesitamos, ahí estuvieron. Pendientes en cada llamada.",
+    palette: "cream",
+    image: null,
+  },
+  {
+    name: "Constructora Quindío",
+    yearsWithUs: 15,
+    coverage: "Cumplimiento · Manejo",
+    quote: "Su equipo entiende nuestro negocio. No vendemos seguros, los usamos.",
+    palette: "navy",
+    image: null,
+  },
+];
+---
+
+<section class="stories section" id="historias">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="eyebrow">Familias y empresas que protegemos</span>
+      <h2>
+        Detrás de cada póliza<br/>
+        hay una <span class="accent serif-italic">historia.</span>
+      </h2>
+      <p>
+        Para nosotros no eres un número de cliente: eres parte de la familia WES.
+        Estas son algunas de las historias que cuidamos cada día.
+      </p>
+    </header>
+
+    <div class="stories__grid">
+      {stories.map((s, i) => (
+        <article class={`story story--${s.palette}${s.image ? ' story--has-image' : ''}`} data-reveal data-reveal-delay={(i % 3) + 1}>
+          <div class="story__photo" aria-hidden="true">
+            {s.image ? (
+              <img src={s.image} alt={s.name} loading="lazy" decoding="async"/>
+            ) : (
+              <>
+                <div class="story__photo-bg"></div>
+                <div class="story__initials">
+                  {s.name.split(" ").map((w) => w[0]).slice(0,2).join("")}
+                </div>
+              </>
+            )}
+            <span class="story__badge">{s.yearsWithUs}+ años</span>
+          </div>
+          <div class="story__body">
+            <h3>{s.name}</h3>
+            <p class="story__coverage">{s.coverage}</p>
+            <blockquote>“{s.quote}”</blockquote>
+            <a href="#contacto" class="story__link">
+              Ver historia completa
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="stories__note" data-reveal>
+      <span class="eyebrow">¿Tu historia podría ser la próxima?</span>
+      <a href="#cotizar" class="btn-link">
+        Empieza con una asesoría gratis
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stories {
+    background: var(--cream-50);
+  }
+
+  .stories__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .story {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(6,18,31,0.06);
+    background: var(--white);
+    display: grid;
+    grid-template-rows: 220px 1fr;
+    transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s;
+  }
+  .story:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .story__photo {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .story__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-out-expo);
+  }
+  .story:hover .story__photo img { transform: scale(1.06); }
+  .story--has-image .story__photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(39,43,73,0.15), rgba(39,43,73,0.55));
+    pointer-events: none;
+  }
+  .story__photo-bg {
+    position: absolute;
+    inset: 0;
+    background-size: 22px 22px;
+    background-image: radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1px);
+    transition: transform 0.8s var(--ease-out-expo);
+  }
+  .story:hover .story__photo-bg { transform: scale(1.08); }
+
+  .story--navy .story__photo {
+    background: linear-gradient(135deg, var(--ink-900), var(--ink-700));
+    color: var(--gold-400);
+  }
+  .story--gold .story__photo {
+    background: linear-gradient(135deg, var(--gold-600), var(--gold-400));
+    color: var(--ink-900);
+  }
+  .story--gold .story__photo-bg {
+    background-image: radial-gradient(rgba(6,18,31,0.18) 1px, transparent 1px);
+  }
+  .story--cream .story__photo {
+    background: linear-gradient(135deg, var(--cream-200), var(--cream-100));
+    color: var(--ink-900);
+  }
+  .story--cream .story__photo-bg {
+    background-image: radial-gradient(rgba(6,18,31,0.1) 1px, transparent 1px);
+  }
+
+  .story__initials {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+  }
+  .story__badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: rgba(0,0,0,0.5);
+    color: var(--cream-50);
+    backdrop-filter: blur(8px);
+  }
+  .story--gold .story__badge { background: rgba(6,18,31,0.85); }
+
+  .story__body {
+    padding: 1.5rem;
+    display: grid;
+    align-content: space-between;
+    gap: 1rem;
+  }
+  .story__body h3 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+  .story__coverage {
+    font-size: 0.78rem;
+    color: var(--gold-600);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.3rem;
+  }
+  .story__body blockquote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-700);
+    line-height: 1.5;
+    border-left: 2px solid var(--gold-500);
+    padding-left: 0.8rem;
+  }
+  .story__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.84rem;
+    color: var(--ink-900);
+    font-weight: 500;
+    transition: color 0.3s, gap 0.3s var(--ease-out-expo);
+  }
+  .story__link:hover { color: var(--gold-600); gap: 0.7rem; }
+
+  .stories__note {
+    margin-top: 4rem;
+    padding: 2.4rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(6,18,31,0.08);
+    border-bottom: 1px solid rgba(6,18,31,0.08);
+    display: grid;
+    gap: 1rem;
+    place-items: center;
+  }
+
+  @media (max-width: 1100px) {
+    .stories__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .stories__grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+interface Props {
+  variant?: "dark" | "light";
+  size?: number;
+}
+const { variant = "dark", size = 38 } = Astro.props;
+const fg = variant === "dark" ? "#272b49" : "#FBF8F2";
+const accent = "var(--gold-500)";
+---
+
+<a class="logo" href="#top" aria-label="WES Agencia de Seguros · Inicio">
+  <span class="logo__mark" style={`width:${size}px;height:${size}px`}>
+    <svg viewBox="0 0 97.39 111.72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="30.75 101.58 48.7 111.72 97.39 84.24 97.39 63.14 30.75 101.58" fill={fg}/>
+      <polygon points="48.7 0 0 27.49 0 84.24 9 89.3 97.39 38.02 97.39 27.49 89.05 22.78 18.81 63.53 18.81 37.71 66.49 10.04 48.7 0" fill={fg}/>
+    </svg>
+    <span class="logo__dot" style={`background:${accent}`}></span>
+  </span>
+  <span class="logo__text" style={`color:${fg}`}>
+    <span class="logo__brand">WES</span>
+    <span class="logo__tag">Agencia de Seguros</span>
+  </span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .logo:hover { opacity: 0.85; }
+  .logo__mark {
+    display: inline-grid;
+    place-items: center;
+    position: relative;
+  }
+  .logo__mark svg { width: 100%; height: 100%; }
+  .logo__dot {
+    position: absolute;
+    bottom: 1px;
+    right: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--cream-50);
+  }
+  .logo__text {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo__brand {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+  }
+  .logo__tag {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+</style>

@@ -1,0 +1,450 @@
+---
+const types = [
+  { id: "auto", label: "Auto", icon: "auto", time: "60 seg" },
+  { id: "vida", label: "Vida", icon: "vida", time: "90 seg" },
+  { id: "salud", label: "Salud", icon: "salud", time: "60 seg" },
+  { id: "hogar", label: "Hogar", icon: "hogar", time: "75 seg" },
+  { id: "empresa", label: "Empresa", icon: "empresa", time: "2 min" },
+];
+import ServiceIcon from "./ServiceIcon.astro";
+---
+
+<section class="quote section" id="cotizar">
+  <div class="container quote__inner">
+    <div class="quote__copy" data-reveal>
+      <span class="eyebrow">Cotizador exprés</span>
+      <h2>
+        Tu cotización<br/>
+        en menos de <span class="accent serif-italic">90 segundos.</span>
+      </h2>
+      <p>
+        Cuéntanos brevemente qué quieres asegurar y te conectamos directamente con un asesor
+        WES que te enviará 3 opciones reales por WhatsApp. Sin formularios eternos,
+        sin promesas vacías.
+      </p>
+      <ul class="quote__perks">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Sin compromiso ni costo</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Comparamos +12 aseguradoras por ti</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l4 4 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Asesor humano, no un bot</li>
+      </ul>
+    </div>
+
+    <div class="quote__panel" data-reveal data-reveal-delay="2">
+      <div class="quote__steps">
+        <span class="quote__step is-active" data-step-pip="1">01</span>
+        <span class="quote__step-line"></span>
+        <span class="quote__step" data-step-pip="2">02</span>
+        <span class="quote__step-line"></span>
+        <span class="quote__step" data-step-pip="3">03</span>
+      </div>
+
+      <form class="quote__form" data-quote-form>
+        <!-- Step 1: tipo -->
+        <fieldset class="quote__pane is-active" data-pane="1">
+          <legend>¿Qué quieres asegurar?</legend>
+          <div class="quote__types">
+            {types.map((t, i) => (
+              <label class="quote__type">
+                <input type="radio" name="type" value={t.label} required checked={i === 0}/>
+                <div class="quote__type-card">
+                  <ServiceIcon name={t.icon} />
+                  <span class="quote__type-label">{t.label}</span>
+                  <span class="quote__type-time">{t.time}</span>
+                </div>
+              </label>
+            ))}
+          </div>
+          <div class="quote__nav">
+            <span class="quote__hint">Selecciona y continúa</span>
+            <button type="button" class="btn btn-primary" data-next>
+              Siguiente
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </fieldset>
+
+        <!-- Step 2: detalles -->
+        <fieldset class="quote__pane" data-pane="2">
+          <legend>Cuéntanos un poco más</legend>
+          <div class="field-row">
+            <label class="field">
+              <span>Nombre</span>
+              <input name="name" type="text" required placeholder="Ej. Juan Felipe"/>
+            </label>
+            <label class="field">
+              <span>WhatsApp</span>
+              <input name="phone" type="tel" required placeholder="+57 300 000 0000"/>
+            </label>
+          </div>
+          <label class="field">
+            <span>Detalles relevantes (opcional)</span>
+            <textarea name="details" rows="3" placeholder="Marca/modelo del auto, edad, valor del bien, etc."></textarea>
+          </label>
+          <div class="quote__nav">
+            <button type="button" class="btn-link" data-prev>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Atrás
+            </button>
+            <button type="button" class="btn btn-primary" data-next>
+              Siguiente
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </fieldset>
+
+        <!-- Step 3: confirmar -->
+        <fieldset class="quote__pane" data-pane="3">
+          <legend>¿Cuándo te llamamos?</legend>
+          <div class="quote__times">
+            <label class="quote__time"><input type="radio" name="time" value="lo antes posible" required checked/><span>Lo antes posible</span></label>
+            <label class="quote__time"><input type="radio" name="time" value="en la mañana"/><span>Mañana (8 a.m. - 12 p.m.)</span></label>
+            <label class="quote__time"><input type="radio" name="time" value="en la tarde"/><span>Tarde (2 p.m. - 6 p.m.)</span></label>
+            <label class="quote__time"><input type="radio" name="time" value="por whatsapp"/><span>Solo por WhatsApp</span></label>
+          </div>
+          <div class="quote__summary" data-summary></div>
+          <div class="quote__nav">
+            <button type="button" class="btn-link" data-prev>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Atrás
+            </button>
+            <button type="submit" class="btn btn-gold">
+              Enviar a WhatsApp
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="quote__footnote">
+        <span class="quote__lock" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6"/></svg>
+        </span>
+        Tus datos están protegidos. Solo los usamos para tu cotización.
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const form = document.querySelector("[data-quote-form]");
+    if (!form) return;
+    const panes = form.querySelectorAll("[data-pane]");
+    const pips = document.querySelectorAll("[data-step-pip]");
+    const summary = form.querySelector("[data-summary]");
+    let step = 1;
+    const total = panes.length;
+
+    const setStep = (n) => {
+      step = Math.min(Math.max(1, n), total);
+      panes.forEach((p) => p.classList.toggle("is-active", +p.dataset.pane === step));
+      pips.forEach((p) => {
+        const v = +p.dataset.stepPip;
+        p.classList.toggle("is-active", v === step);
+        p.classList.toggle("is-done", v < step);
+      });
+      if (step === 3) renderSummary();
+    };
+
+    const renderSummary = () => {
+      const data = new FormData(form);
+      const type = data.get("type") || "—";
+      const name = data.get("name") || "—";
+      const phone = data.get("phone") || "—";
+      summary.innerHTML = `
+        <div class="quote__sum-row"><span>Cobertura</span><strong>${type}</strong></div>
+        <div class="quote__sum-row"><span>Nombre</span><strong>${name}</strong></div>
+        <div class="quote__sum-row"><span>WhatsApp</span><strong>${phone}</strong></div>
+      `;
+    };
+
+    form.querySelectorAll("[data-next]").forEach((b) =>
+      b.addEventListener("click", () => {
+        // Validate current pane
+        const current = form.querySelector(`[data-pane="${step}"]`);
+        const required = current.querySelectorAll("[required]");
+        let ok = true;
+        required.forEach((r) => {
+          if (!r.checkValidity()) { ok = false; r.reportValidity(); }
+        });
+        if (!ok) return;
+        setStep(step + 1);
+      })
+    );
+    form.querySelectorAll("[data-prev]").forEach((b) =>
+      b.addEventListener("click", () => setStep(step - 1))
+    );
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const msg = `Hola WES, soy ${data.get("name")}. Quiero cotizar un seguro de ${data.get("type")}. Mi WhatsApp es ${data.get("phone")}. ${data.get("details") ? "Detalles: " + data.get("details") + ". " : ""}Prefiero que me contacten ${data.get("time")}.`;
+      window.open("https://wa.me/573177674325?text=" + encodeURIComponent(msg), "_blank");
+    });
+  })();
+</script>
+
+<style>
+  .quote {
+    background: var(--cream-50);
+    position: relative;
+    overflow: hidden;
+  }
+  .quote::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(216,181,102,0.08), transparent 60%);
+    top: -20%;
+    right: -10%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .quote__inner {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+  }
+
+  .quote__copy h2 { line-height: 1.05; }
+  .quote__copy .accent {
+    background: linear-gradient(110deg, var(--gold-600), var(--gold-400));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .quote__copy > p { margin-top: 1.2rem; max-width: 50ch; }
+
+  .quote__perks {
+    margin-top: 2rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .quote__perks li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.94rem;
+    color: var(--ink-700);
+  }
+  .quote__perks svg { color: var(--gold-600); flex-shrink: 0; }
+
+  /* Panel */
+  .quote__panel {
+    background: var(--white);
+    border: 1px solid rgba(6,18,31,0.08);
+    border-radius: var(--radius-lg);
+    padding: 2.4rem;
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+
+  .quote__steps {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+  .quote__step {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(6,18,31,0.15);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted-500);
+    transition: all 0.4s var(--ease-out-expo);
+  }
+  .quote__step.is-active {
+    background: var(--ink-900);
+    color: var(--gold-400);
+    border-color: var(--ink-900);
+    transform: scale(1.05);
+  }
+  .quote__step.is-done {
+    background: var(--gold-500);
+    border-color: var(--gold-500);
+    color: var(--ink-900);
+  }
+  .quote__step-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(6,18,31,0.15);
+  }
+
+  .quote__form { display: grid; }
+  .quote__pane {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: none;
+    grid-template-rows: auto 1fr auto;
+    gap: 1.2rem;
+    animation: paneIn 0.5s var(--ease-out-expo);
+  }
+  .quote__pane.is-active { display: grid; }
+  .quote__pane legend {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--ink-900);
+    margin-bottom: 0.8rem;
+  }
+  @keyframes paneIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .quote__types {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .quote__type input { position: absolute; opacity: 0; pointer-events: none; }
+  .quote__type-card {
+    display: grid;
+    place-items: center;
+    gap: 0.4rem;
+    padding: 1rem 0.5rem;
+    border: 1px solid rgba(6,18,31,0.1);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out-expo);
+    text-align: center;
+  }
+  .quote__type-card svg { width: 26px; height: 26px; }
+  .quote__type-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-900);
+  }
+  .quote__type-time {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted-500);
+  }
+  .quote__type input:checked + .quote__type-card {
+    border-color: var(--gold-500);
+    background: rgba(216,181,102,0.08);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+  .quote__type:hover .quote__type-card { border-color: rgba(216,181,102,0.5); }
+
+  .quote__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.6rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(6,18,31,0.06);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .quote__hint {
+    font-size: 0.84rem;
+    color: var(--muted-500);
+  }
+
+  .field { display: grid; gap: 0.4rem; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .quote__pane .field span {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted-700);
+    letter-spacing: 0.04em;
+  }
+  .quote__pane input, .quote__pane textarea, .quote__pane select {
+    background: var(--cream-50);
+    border: 1px solid rgba(6,18,31,0.1);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    color: var(--ink-900);
+    font-family: var(--font-sans);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .quote__pane input:focus, .quote__pane textarea:focus {
+    outline: none;
+    border-color: var(--gold-500);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(216,181,102,0.15);
+  }
+
+  .quote__times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .quote__time { position: relative; }
+  .quote__time input { position: absolute; opacity: 0; pointer-events: none; }
+  .quote__time span {
+    display: block;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(6,18,31,0.1);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .quote__time input:checked + span {
+    background: var(--ink-900);
+    color: var(--gold-400);
+    border-color: var(--ink-900);
+  }
+
+  .quote__summary {
+    margin-top: 1rem;
+    background: var(--cream-100);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.2rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .quote__sum-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+  .quote__sum-row span { color: var(--muted-500); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; }
+  .quote__sum-row strong { font-family: var(--font-serif); color: var(--ink-900); font-size: 1rem; font-weight: 500; }
+
+  .quote__footnote {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--muted-500);
+  }
+  .quote__lock { color: var(--gold-600); display: inline-grid; place-items: center; }
+
+  @media (max-width: 920px) {
+    .quote__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .quote__types { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .quote__times { grid-template-columns: 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    .quote__panel { padding: 1.6rem; }
+    .quote__types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .quote__type:last-child { grid-column: span 2; }
+    .quote__type:last-child .quote__type-card { padding: 0.85rem 1rem; }
+  }
+</style>

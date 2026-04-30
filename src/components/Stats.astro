@@ -1,0 +1,136 @@
+---
+import { stats } from "../data/site";
+const labels = [
+  "Más de medio siglo asegurando familias",
+  "Confianza generacional",
+  "Cobertura del país",
+  "Cuando más nos necesitas",
+];
+---
+
+<section class="stats-band">
+  <div class="container">
+    <div class="stats-band__wrap">
+      {stats.map((s, i) => (
+        <div class="stat" data-reveal data-reveal-delay={(i % 4) + 1}>
+          <span class="stat__icon" aria-hidden="true">
+            {i === 0 && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 3"/>
+              </svg>
+            )}
+            {i === 1 && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.9"/>
+                <path d="M17 3.1a4 4 0 0 1 0 7.8"/>
+              </svg>
+            )}
+            {i === 2 && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-7 8-13a8 8 0 0 0-16 0c0 6 8 13 8 13Z"/>
+                <circle cx="12" cy="9" r="3"/>
+              </svg>
+            )}
+            {i === 3 && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s7-4 7-10V5l-7-3-7 3v7c0 6 7 10 7 10Z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            )}
+          </span>
+          <p class="stat__num">
+            <span data-count={s.value}>0</span><span class="stat__suffix">{s.suffix}</span>
+          </p>
+          <p class="stat__label">{s.label}</p>
+          <p class="stat__sub">{labels[i]}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-band {
+    background: var(--cream-50);
+    padding: 0 0 4rem;
+    margin-top: -2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .stats-band__wrap {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    background: var(--white);
+    border: 1px solid rgba(39,43,73,0.08);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 30px 60px -30px rgba(39,43,73,0.18);
+    overflow: hidden;
+  }
+
+  .stat {
+    padding: 2.4rem 2rem;
+    position: relative;
+    border-right: 1px solid rgba(39,43,73,0.06);
+    transition: background 0.4s var(--ease-out-expo);
+  }
+  .stat:last-child { border-right: 0; }
+  .stat:hover { background: linear-gradient(180deg, transparent, rgba(216,181,102,0.04)); }
+
+  .stat__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, rgba(216,181,102,0.12), rgba(216,181,102,0.04));
+    color: var(--gold-600);
+    margin-bottom: 1.4rem;
+  }
+  .stat__icon svg { width: 18px; height: 18px; }
+
+  .stat__num {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 1.8rem + 1.8vw, 3.2rem);
+    line-height: 1;
+    color: var(--ink-800);
+    display: inline-flex;
+    align-items: baseline;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .stat__suffix {
+    color: var(--gold-600);
+    font-weight: 400;
+    margin-left: 0.05em;
+  }
+  .stat__label {
+    font-size: 0.78rem;
+    color: var(--muted-500);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.6rem;
+  }
+  .stat__sub {
+    font-size: 0.85rem;
+    color: var(--ink-700);
+    line-height: 1.4;
+    max-width: 22ch;
+  }
+
+  @media (max-width: 920px) {
+    .stats-band__wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat:nth-child(2) { border-right: 0; }
+    .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(39,43,73,0.06); }
+  }
+  @media (max-width: 560px) {
+    .stats-band { padding-bottom: 3rem; }
+    .stats-band__wrap { grid-template-columns: 1fr; }
+    .stat { border-right: 0 !important; border-bottom: 1px solid rgba(39,43,73,0.06); }
+    .stat:last-child { border-bottom: 0; }
+    .stat { padding: 1.8rem 1.5rem; }
+  }
+</style>

@@ -1,0 +1,209 @@
+---
+import { partners } from "../data/site";
+---
+
+<section class="partners" id="aliados">
+  <div class="partners__bg" aria-hidden="true">
+    <div class="partners__orb partners__orb--1"></div>
+    <div class="partners__orb partners__orb--2"></div>
+  </div>
+
+  <div class="container">
+    <header class="partners__head" data-reveal>
+      <div class="partners__head-left">
+        <div class="partners__pretitle">
+          <span class="partners__line"></span>
+          <span class="partners__pre">Aliados estratégicos</span>
+        </div>
+        <h2>
+          Trabajamos con las<br/>
+          <em class="serif-italic">aseguradoras líderes</em><br/>
+          del país.
+        </h2>
+      </div>
+      <div class="partners__head-right">
+        <p>
+          Nuestra <strong>independencia</strong> nos permite ofrecerte la mejor combinación
+          de cobertura, servicio y precio sin estar atados a una sola compañía.
+        </p>
+        <div class="partners__count">
+          <span class="partners__count-num">{partners.length}+</span>
+          <span class="partners__count-label">aseguradoras<br/>aliadas</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="partners__wall" data-reveal data-reveal-delay="2">
+      {partners.map((p, i) => (
+        <div class="partner" title={p.name} aria-label={p.name}>
+          <img
+            src={p.logo}
+            alt={p.name}
+            loading="eager"
+            decoding="async"
+            style={`transform: scale(${p.scale ?? 1});`}
+          />
+        </div>
+      ))}
+    </div>
+
+    <p class="partners__foot" data-reveal data-reveal-delay="3">
+      <span class="partners__dot" aria-hidden="true"></span>
+      Todas las pólizas son emitidas por aseguradoras vigiladas por la <strong>Superintendencia Financiera de Colombia</strong>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .partners {
+    position: relative;
+    padding: 6rem 0;
+    background: var(--cream-50);
+    border-top: 1px solid rgba(39,43,73,0.06);
+    border-bottom: 1px solid rgba(39,43,73,0.06);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .partners__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .partners__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+  }
+  .partners__orb--1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(216,181,102,0.35), transparent 60%);
+    top: -10%;
+    left: -8%;
+  }
+  .partners__orb--2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(39,43,73,0.18), transparent 60%);
+    bottom: -10%;
+    right: -5%;
+  }
+
+  .partners__head {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+  .partners__pretitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.4rem;
+  }
+  .partners__line { width: 36px; height: 1px; background: var(--gold-500); }
+  .partners__pre {
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-600);
+  }
+  .partners__head h2 {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .partners__head h2 em {
+    background: linear-gradient(110deg, var(--gold-600), var(--gold-400) 60%, var(--gold-600));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .partners__head-right {
+    display: grid;
+    gap: 2rem;
+    padding-bottom: 0.4rem;
+  }
+  .partners__head-right p {
+    font-size: var(--fs-base);
+    color: var(--muted-700);
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+  .partners__head-right p strong { color: var(--ink-800); font-weight: 500; }
+  .partners__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    width: fit-content;
+  }
+  .partners__count-num {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--ink-800);
+  }
+  .partners__count-label {
+    font-size: 0.78rem;
+    line-height: 1.2;
+    color: var(--muted-500);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* Wall — sin card, logos directos a color */
+  .partners__wall {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    gap: 2rem;
+    align-items: center;
+  }
+  .partner {
+    height: 90px;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .partner:hover { transform: translateY(-4px); }
+
+  .partner img {
+    max-width: 100%;
+    max-height: 64px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  .partners__foot {
+    margin-top: 4rem;
+    text-align: center;
+    font-size: 0.84rem;
+    color: var(--muted-500);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .partners__foot strong { color: var(--ink-800); font-weight: 500; }
+  .partners__dot {
+    width: 7px; height: 7px;
+    background: var(--gold-500);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(216,181,102,0.18);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .partners__wall { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 2.5rem 2rem; }
+  }
+  @media (max-width: 820px) {
+    .partners__head { grid-template-columns: 1fr; gap: 2.5rem; align-items: start; }
+    .partners__wall { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  }
+  @media (max-width: 540px) {
+    .partners { padding: 4rem 0; }
+    .partners__wall { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 2rem 1.2rem; }
+    .partner { height: 70px; }
+    .partner img { max-height: 50px; }
+    .partners__count-num { font-size: 2rem; }
+  }
+</style>

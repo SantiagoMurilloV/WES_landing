@@ -1,0 +1,102 @@
+---
+import { testimonials } from "../data/site";
+---
+
+<section class="testi section" id="testimonios">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="eyebrow">Testimonios</span>
+      <h2>Lo que <span class="accent">dicen</span> nuestras familias.</h2>
+    </header>
+
+    <div class="testi__grid">
+      {testimonials.map((t, i) => (
+        <figure class="testi__card" data-reveal data-reveal-delay={i + 1}>
+          <div class="testi__stars" aria-hidden="true">★★★★★</div>
+          <blockquote>
+            <p>{t.quote}</p>
+          </blockquote>
+          <figcaption>
+            <div class="testi__avatar" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21v-2a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div>
+              <strong>{t.author}</strong>
+              <span>{t.role}</span>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testi {
+    background: var(--cream-100);
+    border-top: 1px solid rgba(6,18,31,0.06);
+    border-bottom: 1px solid rgba(6,18,31,0.06);
+  }
+  .testi__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+  .testi__card {
+    padding: 2rem;
+    background: var(--white);
+    border: 1px solid rgba(6,18,31,0.06);
+    border-radius: var(--radius-lg);
+    display: grid;
+    gap: 1.6rem;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .testi__card:hover { transform: translateY(-4px); }
+
+  .testi__stars {
+    color: var(--gold-500);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+  }
+  .testi__card blockquote p {
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    line-height: 1.5;
+    color: var(--ink-800);
+  }
+  .testi__card figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border-top: 1px solid rgba(6,18,31,0.08);
+    padding-top: 1.2rem;
+  }
+  .testi__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ink-700), var(--ink-900));
+    color: var(--gold-400);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+  .testi__card figcaption strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--ink-900);
+  }
+  .testi__card figcaption span {
+    font-size: 0.78rem;
+    color: var(--muted-500);
+  }
+
+  @media (max-width: 920px) {
+    .testi__grid { grid-template-columns: 1fr; }
+  }
+</style>

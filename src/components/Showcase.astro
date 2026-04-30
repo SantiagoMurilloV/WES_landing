@@ -1,0 +1,229 @@
+---
+import { site } from "../data/site";
+
+const showcases = [
+  {
+    title: "Tu auto",
+    subtitle: "blindado",
+    summary: "Cobertura full contra todo riesgo, asistencia 24/7 y carro de reemplazo cuando lo necesites.",
+    image: "/media/Autos-Seguros-2-WES-Agencia-de-Seguros.webp",
+    tag: "Auto",
+    n: "01",
+  },
+  {
+    title: "Tu vida",
+    subtitle: "respaldada",
+    summary: "Tranquilidad financiera para los tuyos cuando más lo necesiten, con coberturas a medida.",
+    image: "/media/Vida-Seguros-3-WES-Agencia-de-Seguros.webp",
+    tag: "Vida",
+    n: "02",
+  },
+  {
+    title: "Tu empresa",
+    subtitle: "protegida",
+    summary: "Operación, equipo y activos cubiertos con pólizas pensadas para tu realidad de negocio.",
+    image: "/media/Empresariales-Seguros-1-WES-Agencia-de-Seguros.webp",
+    tag: "Empresa",
+    n: "03",
+  },
+];
+---
+
+<section class="showcase section">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="eyebrow">Coberturas en acción</span>
+      <h2>
+        Protección real para<br/>
+        los <span class="accent serif-italic">momentos importantes.</span>
+      </h2>
+      <p>
+        No vendemos miedo. Diseñamos pólizas inteligentes que te dan la libertad de vivir,
+        emprender y soñar sabiendo que estás respaldado.
+      </p>
+    </header>
+
+    <div class="showcase__grid">
+      {showcases.map((s, i) => (
+        <article class="scase" data-reveal data-reveal-delay={(i % 3) + 1}>
+          <div class="scase__media">
+            <img src={s.image} alt={`${s.title} ${s.subtitle}`} loading="eager" decoding="async"/>
+            <span class="scase__tag">
+              <span class="scase__tag-dot"></span>
+              {s.tag}
+            </span>
+            <span class="scase__num">{s.n}</span>
+          </div>
+          <div class="scase__body">
+            <h3 class="scase__title">
+              <span class="scase__title-1">{s.title}</span>
+              <span class="scase__title-2"><em>{s.subtitle}</em></span>
+            </h3>
+            <p class="scase__summary">{s.summary}</p>
+            <a class="scase__link" href={site.whatsapp} target="_blank" rel="noopener">
+              <span>Cotizar {s.tag.toLowerCase()}</span>
+              <span class="scase__arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    background: var(--cream-50);
+    position: relative;
+  }
+  .showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  .scase {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid rgba(39,43,73,0.06);
+    transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s, border-color 0.5s;
+  }
+  .scase:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(216,181,102,0.3);
+  }
+  .scase__media {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+  }
+  .scase__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s var(--ease-out-expo);
+  }
+  .scase:hover .scase__media img { transform: scale(1.06); }
+  .scase__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(39,43,73,0.45) 100%);
+    pointer-events: none;
+  }
+
+  .scase__tag {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0.95);
+    color: var(--ink-800);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+  .scase__tag-dot {
+    width: 6px; height: 6px;
+    background: var(--gold-500);
+    border-radius: 50%;
+  }
+
+  .scase__num {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.4rem;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.1em;
+    background: rgba(0,0,0,0.25);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(8px);
+  }
+
+  .scase__body {
+    padding: 1.8rem 1.8rem 2rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .scase__title {
+    font-family: var(--font-serif);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+  .scase__title-1 {
+    display: block;
+    font-size: clamp(1.4rem, 1rem + 1vw, 1.85rem);
+    color: var(--ink-900);
+  }
+  .scase__title-2 {
+    display: block;
+    font-size: clamp(1.4rem, 1rem + 1vw, 1.85rem);
+    color: var(--gold-600);
+  }
+  .scase__title-2 em {
+    font-style: italic;
+    background: linear-gradient(110deg, var(--gold-600), var(--gold-400) 60%, var(--gold-600));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .scase__summary {
+    font-size: 0.95rem;
+    color: var(--muted-700);
+    line-height: 1.55;
+  }
+  .scase__link {
+    margin-top: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(39,43,73,0.12);
+    color: var(--ink-900);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.4s var(--ease-out-expo);
+  }
+  .scase__link:hover {
+    background: var(--ink-900);
+    color: var(--cream-50);
+    border-color: var(--ink-900);
+    padding-left: 1.4rem;
+  }
+  .scase__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gold-500);
+    color: var(--ink-900);
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+  .scase__link:hover .scase__arrow {
+    transform: translateX(4px) rotate(-2deg);
+  }
+
+  @media (max-width: 920px) {
+    .showcase__grid { grid-template-columns: 1fr; }
+  }
+</style>

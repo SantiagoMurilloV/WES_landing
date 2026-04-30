@@ -1,0 +1,39 @@
+---
+---
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+<script is:inline>
+  (function () {
+    const bar = document.querySelector("[data-progress]");
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      bar.style.transform = `scaleX(${p / 100})`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+<style>
+  .progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    z-index: 60;
+    background: transparent;
+    pointer-events: none;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: linear-gradient(90deg, var(--gold-600), var(--gold-400), var(--gold-600));
+    box-shadow: 0 0 12px rgba(216,181,102,0.5);
+    transition: transform 0.05s linear;
+  }
+</style>
